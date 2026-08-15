@@ -485,6 +485,59 @@ function buildStockPanel(stock, tabIdx) {
     <div class="sec" style="color:#FF9800;border-left:3px solid #FF9800;padding-left:.6rem;margin-top:1.5rem">
       ▌ 섹션 B — 공매도 추이
     </div>
+
+    <div style="background:#101F33;border:1px solid #1E3560;border-left:3px solid #FF9800;border-radius:6px;padding:.7rem .9rem;margin:.6rem 0 .9rem;font-size:.76rem;line-height:1.65;color:#B0BEC5">
+      <div style="color:#FFB74D;font-weight:600;margin-bottom:.35rem">왜 보나 — 한 줄 요약</div>
+      <b style="color:#E0E6ED">공매도 거래량</b>은 유량(오늘 얼마나 팔았나), <b style="color:#E0E6ED">공매도 잔고</b>는 저량(앞으로 되사야 할 물량).
+      잔고는 하락 신호인 동시에 <b style="color:#4CAF50">상방 연료 재고</b>다 — 촉매가 나오면 강제 환매수가 상승을 증폭시킨다.
+      <span style="color:#FF8A80">절대 수준은 종목 구조(유동주식수·ETF 편입·페어 짝)에 좌우돼 종목 간 비교가 무의미</span>하고,
+      신호는 오직 <b style="color:#E0E6ED">자기 과거 대비 편차</b>(MA 대비 %, z-score)에서 나온다.
+      <details style="margin-top:.5rem">
+        <summary style="cursor:pointer;color:#FFB74D;font-weight:600;outline:none">▸ 자세히 — 근거 · 조합 해석 · 연기금 교차 · 한계</summary>
+        <div style="margin-top:.55rem;padding-top:.5rem;border-top:1px solid #1E3560">
+
+          <div style="color:#FFB74D;font-weight:600;margin:.2rem 0 .3rem">1. 예측에 쓰는 근거</div>
+          <div style="margin-left:.2rem">
+            • <b style="color:#E0E6ED">정보거래자 프록시</b> — 대차수수료·무한손실·강제소환 리스크를 감수하고 들어오는 참여자는 평균적으로 정보 우위. <span style="color:#78909C">단 효과 크기는 작고 개별 종목 승률은 높지 않다.</span><br>
+            • <b style="color:#E0E6ED">유일한 체계적 비관론</b> — 증권사 리포트는 구조적 매수 편향. "비싸다"는 의견이 실제 자금으로 표출되는 거의 유일한 채널.<br>
+            • <b style="color:#E0E6ED">잠재 매수 대기 물량</b> — 잔고는 언젠가 반드시 되갚아야 한다(숏 스퀴즈 재료).<br>
+            • <b style="color:#E0E6ED">이벤트 선행성</b> — 유상증자·CB/BW·블록딜·MSCI 리밸런싱 전 헤지 목적 물량이 먼저 늘어난다. 공시 며칠 전 잔고가 튄다.
+          </div>
+
+          <div style="color:#FFB74D;font-weight:600;margin:.6rem 0 .3rem">2. 조합 해석 — 하나만 보면 해석이 안 된다</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.73rem">
+            <tr style="color:#78909C"><td style="padding:.2rem .4rem .2rem 0;width:44%">패턴</td><td style="padding:.2rem 0">해석</td></tr>
+            <tr><td style="padding:.22rem .4rem .22rem 0;border-top:1px solid #16273F;color:#E0E6ED">거래량↑ + 잔고↑</td><td style="padding:.22rem 0;border-top:1px solid #16273F;color:#FF8A80">신규 숏 진입 — 방향성 하락 베팅</td></tr>
+            <tr><td style="padding:.22rem .4rem .22rem 0;border-top:1px solid #16273F;color:#E0E6ED">거래량↑ + 잔고 횡보</td><td style="padding:.22rem 0;border-top:1px solid #16273F">데이트레이딩성 — 방향성 의미 약함</td></tr>
+            <tr><td style="padding:.22rem .4rem .22rem 0;border-top:1px solid #16273F;color:#E0E6ED">잔고↓ + 주가↑</td><td style="padding:.22rem 0;border-top:1px solid #16273F;color:#4CAF50">숏 커버링 진행 — 상승 가속 구간일 수 있음</td></tr>
+            <tr><td style="padding:.22rem .4rem .22rem 0;border-top:1px solid #16273F;color:#E0E6ED">잔고↑ + 거래량 낮음</td><td style="padding:.22rem 0;border-top:1px solid #16273F;color:#C9A84C">차익거래·헤지 목적 — 하락 신호로 읽으면 오독</td></tr>
+            <tr><td style="padding:.22rem .4rem .22rem 0;border-top:1px solid #16273F;color:#E0E6ED">거래량 급증 + 주가 안 빠짐</td><td style="padding:.22rem 0;border-top:1px solid #16273F;color:#4CAF50">매수 주체가 강함 — 스퀴즈 재료 축적</td></tr>
+          </table>
+
+          <div style="color:#5BB8F5;font-weight:600;margin:.65rem 0 .3rem">3. 연기금 수급과 교차 — 이 대시보드의 핵심 활용</div>
+          <div style="margin-left:.2rem">
+            • 연기금 순매수 + 잔고 <b>감소</b> → <span style="color:#4CAF50">수급 쌍끌이, 방향성 신뢰도 상승</span><br>
+            • 연기금 순매수 + 잔고 <b>증가</b> → <span style="color:#C9A84C">롱숏 페어의 숏 다리이거나 이벤트 헤지. 매수를 그대로 호재로 읽으면 안 됨</span><br>
+            • 연기금 순매도 + 공매도 급증 → <span style="color:#FF8A80">펀더멘털 훼손 컨센서스 형성 가능성</span><br>
+            • 외국인 지분율↑ + 잔고↑ → <span style="color:#78909C">외국인은 주요 대여자 — 대여 가능 물량이 늘어난 결과일 수도</span>
+          </div>
+          <div style="margin:.4rem 0 0;color:#8A9BB5">
+            ⇒ 공매도·잔고는 그 자체로 주가를 예측하기보다, <b style="color:#E0E6ED">연기금·외국인 수급이 진짜 방향성 베팅인지 헤지된 포지션인지 판별하는 필터</b>로 쓸 때 실익이 가장 크다.
+          </div>
+
+          <div style="color:#FF5252;font-weight:600;margin:.65rem 0 .3rem">4. 반드시 감안할 한계</div>
+          <div style="margin-left:.2rem">
+            • <b style="color:#FF8A80">이 차트의 "공매도 잔고"는 순보유잔고(0.5% 이상 공시)로, 대차잔고와 별개 데이터다.</b> 대차잔고는 헤지·차익거래·CB 헤지·ETF LP 물량까지 포함하며 현재 수집하지 않는다. 둘을 혼동하는 것이 가장 흔한 실수.<br>
+            • 잔고 공시는 <b>T+2~3 지연</b> — 최근 2~3일 구간은 데이터가 아니라 공백이다(잔고 0 구간 점선 처리).<br>
+            • 한국은 공매도 금지·재개가 반복돼 시계열이 구조적으로 단절 — 금지 구간 전후를 같은 축에서 비교하면 안 된다.<br>
+            • 유동성 낮은 종목은 기관 한 곳의 헤지 한 건에 잔고가 급변 — 소형주일수록 노이즈 비율이 높다.<br>
+            • <b style="color:#E0E6ED">단독 매매 신호가 아니다.</b> 다른 수급 지표의 해석을 교정하는 보조 축으로 쓰는 것이 실증적으로 타당하다.
+          </div>
+
+        </div>
+      </details>
+    </div>
+
     <div id="s${c}_short"></div>
 
     <div class="sec" style="color:#C9A84C;border-left:3px solid #C9A84C;padding-left:.6rem;margin-top:1.5rem">
@@ -1194,6 +1247,16 @@ function formatHoldUnit(v){
   return Math.round(v/1e4) + '만';
 }
 
+/** 금액(원) 축약 포맷터 — 조/억/만원. 부호 포함(음수는 '-'), 양수 '+'는 호출부에서 부착 */
+function fmtKRW(v){
+  const a = Math.abs(v), s = v < 0 ? '-' : '';
+  if(a >= 1e12) return s + (a/1e12).toFixed(2) + '조원';
+  if(a >= 1e10) return s + Math.round(a/1e8).toLocaleString() + '억원';
+  if(a >= 1e8)  return s + (a/1e8).toFixed(1) + '억원';
+  if(a >= 1e4)  return s + Math.round(a/1e4).toLocaleString() + '만원';
+  return s + a.toLocaleString() + '원';
+}
+
 function drawForeignSection(stock){
   const c = stock.code;
   const el = document.getElementById('s' + c + '_foreign');
@@ -1226,12 +1289,12 @@ function drawForeignSection(stock){
     </div>
     <div style="background:linear-gradient(135deg,#0F2035,#162543);border:1px solid #1E3560;border-top:3px solid ${sum30>=0?'#4CAF50':'#FF5252'};padding:.9rem 1.1rem;border-radius:8px">
       <div style="font-size:.72rem;color:#546E7A;letter-spacing:.05em;margin-bottom:.3rem">기간 누적 순매수</div>
-      <div style="font-size:1.35rem;font-weight:700;color:${sum30>=0?'#4CAF50':'#FF5252'}">${sum30>=0?'+':''}${sum30.toLocaleString()}원</div>
-      <div style="font-size:.72rem;color:#546E7A;margin-top:.3rem">일평균 ${avg30>=0?'+':''}${avg30.toLocaleString()}원</div>
+      <div style="font-size:1.35rem;font-weight:700;color:${sum30>=0?'#4CAF50':'#FF5252'}">${sum30>=0?'+':''}${fmtKRW(sum30)}</div>
+      <div style="font-size:.72rem;color:#546E7A;margin-top:.3rem">일평균 ${avg30>=0?'+':''}${fmtKRW(avg30)}</div>
     </div>
     <div style="background:linear-gradient(135deg,#0F2035,#162543);border:1px solid #1E3560;border-top:3px solid ${latest.net>=0?'#4CAF50':'#FF5252'};padding:.9rem 1.1rem;border-radius:8px">
       <div style="font-size:.72rem;color:#546E7A;letter-spacing:.05em;margin-bottom:.3rem">최근일 순매수</div>
-      <div style="font-size:1.35rem;font-weight:700;color:${latest.net>=0?'#4CAF50':'#FF5252'}">${latest.net>=0?'+':''}${latest.net.toLocaleString()}원</div>
+      <div style="font-size:1.35rem;font-weight:700;color:${latest.net>=0?'#4CAF50':'#FF5252'}">${latest.net>=0?'+':''}${fmtKRW(latest.net)}</div>
       <div style="font-size:.72rem;color:${latest.chg>=0?'#4CAF50':'#FF5252'};margin-top:.3rem">주가 ${latest.price.toLocaleString()}원 (${latest.chg>=0?'+':''}${latest.chg}%)</div>
     </div>
   </div>`;
@@ -1326,7 +1389,7 @@ function drawForeignSection(stock){
 
   const bars2 = FLOG.map((r, i) => {
     const x = xs2(i), h = Math.abs(yN(r.net) - y0), yb = r.net >= 0 ? yN(r.net) : y0;
-    return `<rect x="${x-bw2/2}" y="${yb}" width="${bw2}" height="${h}" fill="${r.net>=0?'#4CAF50':'#FF5252'}" opacity=".85" rx="2"><title>${r.d}: ${r.net>=0?'+':''}${r.net.toLocaleString()}원</title></rect>`;
+    return `<rect x="${x-bw2/2}" y="${yb}" width="${bw2}" height="${h}" fill="${r.net>=0?'#4CAF50':'#FF5252'}" opacity=".85" rx="2"><title>${r.d}: ${r.net>=0?'+':''}${fmtKRW(r.net)}</title></rect>`;
   }).join('');
 
   const xLab2 = FLOG.filter((_, i) => i % 3 === 0).map((r) => {
@@ -1392,7 +1455,7 @@ function drawShortSection(stock){
   const alertFlag = latest.vol > avg1m * 1.3;
   const alertRatio = avg1m > 0 ? Math.round(latest.vol/avg1m*100) : 0;
 
-  // 시총 대비 대차잔고비율 — stock.totalShares 우선, 없으면 NPS_TOTAL_SHARES 호환
+  // 시총 대비 공매도 잔고비율(순보유잔고 기준 — 대차잔고와 다름) — stock.totalShares 우선, 없으면 NPS_TOTAL_SHARES 호환
   const TOTAL_SH = stock.totalShares || 0;
   const latestBal = hasBal ? allBals.filter(v => v > 0).slice(-1)[0] : null;
   const balRatio  = (latestBal && TOTAL_SH > 0) ? Math.round(latestBal/TOTAL_SH*10000)/100 : null;
@@ -1435,10 +1498,10 @@ function drawShortSection(stock){
     + kCard('#FF5252', '최근일 공매도 거래량', latest.vol.toLocaleString() + '주 ' + alertBadge, ma5Sub, ma5Color)
     + kCard('#FF9800', '평균 공매도 거래량 (1개월)', avg1m.toLocaleString() + '주', '최근 ' + data.length + '거래일 평균')
     + kCard('#C9A84C', '최근일 공매도 거래대금', (latest.amt/1e8).toFixed(1) + '억', latest.d.replace(/(\d{4})(\d{2})(\d{2})/,'$1.$2.$3') + ' 기준')
-    + kCard('#9C27B0', '대차잔고 최신값',
+    + kCard('#9C27B0', '공매도 잔고 최신값',
         latestBal ? latestBal.toLocaleString() + '주' : '공시 지연',
         latestBal ? (balRatio !== null ? '시총 대비 ' + balRatio + '%' : '–') : 'T+2~3일 지연', '#B0BEC5')
-    + kCard(balTrendColor, '대차잔고 추세 (최근 ' + Math.min(5, balData.length) + '일)',
+    + kCard(balTrendColor, '공매도 잔고 추세 (최근 ' + Math.min(5, balData.length) + '일)',
         balData.length >= 3 ? balTrend : '데이터 부족',
         balData.length >= 3 ? '상승=하락 전조 / 하락=숏커버링 기대' : balData.length + '거래일만 유효', balTrendColor)
     + '</div>';
@@ -1508,7 +1571,7 @@ function drawShortSection(stock){
     + '<text x="' + (W-PR+6) + '" y="' + (PT+ch) + '" fill="#C9A84C" font-size="8">0</text>'
     + '</svg>';
 
-  // ── 차트2: 대차잔고 (x축 = data 전체, bal=0 점선 처리) ──
+  // ── 차트2: 공매도 잔고(순보유) (x축 = data 전체, bal=0 점선 처리) ──
   let chart2 = '';
   if(balData.length >= 2){
     const W2 = 700, H2 = 140, PL2 = PL, PR2 = PR, PT2 = 20, PB2 = 30;
@@ -1575,7 +1638,7 @@ function drawShortSection(stock){
     const balDots = data.map((r, i) => {
       if(r.bal > 0){
         return '<circle cx="' + xs2(i) + '" cy="' + yB(r.bal) + '" r="3.5" fill="#9C27B0" stroke="#0D1B2A" stroke-width="1">'
-          + '<title>' + r.d + ': 대차잔고 ' + r.bal.toLocaleString() + '주'
+          + '<title>' + r.d + ': 공매도 잔고 ' + r.bal.toLocaleString() + '주'
           + (TOTAL_SH > 0 ? ' (시총 대비 ' + Math.round(r.bal/TOTAL_SH*10000)/100 + '%)' : '') + '</title></circle>';
       } else {
         return '<circle cx="' + xs2(i) + '" cy="' + (PT2+ch2) + '" r="3" fill="none" stroke="#9C27B0" stroke-width="1.2" stroke-dasharray="2,2" opacity=".6">'
@@ -1613,7 +1676,7 @@ function drawShortSection(stock){
     }).join('');
 
     chart2 = '<div style="font-size:.78rem;color:#9C27B0;margin:.9rem 0 .3rem">'
-      + '● 대차잔고 추이 — 추세: <b style="color:' + trendColor + '">' + balTrend + '</b>'
+      + '● 공매도 잔고(순보유) 추이 — 추세: <b style="color:' + trendColor + '">' + balTrend + '</b>'
       + (balRatio !== null ? ' &nbsp;|&nbsp; 시총 대비 <b style="color:' + (balRatio>5?'#FF5252':'#B0BEC5') + '">' + balRatio + '%</b>' : '')
       + '<span style="color:#546E7A;font-size:.7rem;margin-left:.6rem">공시지연 ' + zeroCount + '일 포함 / 유효 ' + balData.length + '거래일' + (TOTAL_SH > 0 ? ' · 점선=시총 5% 경계' : '') + '</span>'
       + '</div>'
@@ -1632,7 +1695,7 @@ function drawShortSection(stock){
       + '<text x="' + (PL2-5) + '" y="' + (PT2+ch2) + '" text-anchor="end" fill="#546E7A" font-size="8">0</text>'
       + '</svg>';
   } else {
-    chart2 = '<div style="color:#546E7A;font-size:.8rem;margin-top:.7rem">대차잔고 데이터 2거래일 미만 — KRX T+2~3일 공시 지연 영향</div>';
+    chart2 = '<div style="color:#546E7A;font-size:.8rem;margin-top:.7rem">공매도 잔고 데이터 2거래일 미만 — KRX T+2~3일 공시 지연 영향</div>';
   }
 
   // ── 시사점 배너 ──
@@ -1642,11 +1705,11 @@ function drawShortSection(stock){
   if(alertFlag){
     insightText = '⚠ 공매도 급증 경보: 1개월 평균 대비 +' + alertRatio + '% — 이벤트 전 하락 베팅 포지션 가능성 점검 필요';
   } else if(balData.length >= 3 && balTrend.indexOf('우상향') >= 0){
-    insightText = '대차잔고 우상향 + 공매도 지속 → 공매도 세력 포지션 구축 중, 연기금 순매수와 충돌 구간';
+    insightText = '공매도 잔고 우상향 + 공매도 지속 → 공매도 세력 포지션 구축 중, 연기금 순매수와 충돌 구간';
   } else if(balData.length >= 3){
     insightText = '공매도 거래량 평균 이하 유지 중 — 급증 시 재점검 필요';
   } else {
-    insightText = '대차잔고 T+2~3일 지연 공시 — 과거 데이터 기준 추세 분석';
+    insightText = '공매도 잔고 T+2~3일 지연 공시 — 과거 데이터 기준 추세 분석';
   }
 
   const insight = '<div style="border:0.5px solid ' + insightBorder + ';background:' + insightBg
