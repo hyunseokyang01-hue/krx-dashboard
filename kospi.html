@@ -1339,12 +1339,12 @@ function drawForeignSection(stock){
     </div>
     <div style="background:linear-gradient(135deg,#0F2035,#162543);border:1px solid #1E3560;border-top:3px solid ${sum30>=0?'#4CAF50':'#FF5252'};padding:.9rem 1.1rem;border-radius:8px">
       <div style="font-size:.72rem;color:#546E7A;letter-spacing:.05em;margin-bottom:.3rem">기간 누적 순매수</div>
-      <div style="font-size:1.35rem;font-weight:700;color:${sum30>=0?'#4CAF50':'#FF5252'}">${sum30>=0?'+':''}${sum30.toLocaleString()}주</div>
-      <div style="font-size:.72rem;color:#546E7A;margin-top:.3rem">일평균 ${avg30>=0?'+':''}${avg30.toLocaleString()}주</div>
+      <div style="font-size:1.35rem;font-weight:700;color:${sum30>=0?'#4CAF50':'#FF5252'}">${sum30>=0?'+':''}${sum30.toLocaleString()}원</div>
+      <div style="font-size:.72rem;color:#546E7A;margin-top:.3rem">일평균 ${avg30>=0?'+':''}${avg30.toLocaleString()}원</div>
     </div>
     <div style="background:linear-gradient(135deg,#0F2035,#162543);border:1px solid #1E3560;border-top:3px solid ${latest.net>=0?'#4CAF50':'#FF5252'};padding:.9rem 1.1rem;border-radius:8px">
       <div style="font-size:.72rem;color:#546E7A;letter-spacing:.05em;margin-bottom:.3rem">최근일 순매수</div>
-      <div style="font-size:1.35rem;font-weight:700;color:${latest.net>=0?'#4CAF50':'#FF5252'}">${latest.net>=0?'+':''}${latest.net.toLocaleString()}주</div>
+      <div style="font-size:1.35rem;font-weight:700;color:${latest.net>=0?'#4CAF50':'#FF5252'}">${latest.net>=0?'+':''}${latest.net.toLocaleString()}원</div>
       <div style="font-size:.72rem;color:${latest.chg>=0?'#4CAF50':'#FF5252'};margin-top:.3rem">주가 ${latest.price.toLocaleString()}원 (${latest.chg>=0?'+':''}${latest.chg}%)</div>
     </div>
   </div>`;
@@ -1439,7 +1439,7 @@ function drawForeignSection(stock){
 
   const bars2 = FLOG.map((r, i) => {
     const x = xs2(i), h = Math.abs(yN(r.net) - y0), yb = r.net >= 0 ? yN(r.net) : y0;
-    return `<rect x="${x-bw2/2}" y="${yb}" width="${bw2}" height="${h}" fill="${r.net>=0?'#4CAF50':'#FF5252'}" opacity=".85" rx="2"><title>${r.d}: ${r.net>=0?'+':''}${r.net.toLocaleString()}주</title></rect>`;
+    return `<rect x="${x-bw2/2}" y="${yb}" width="${bw2}" height="${h}" fill="${r.net>=0?'#4CAF50':'#FF5252'}" opacity=".85" rx="2"><title>${r.d}: ${r.net>=0?'+':''}${r.net.toLocaleString()}원</title></rect>`;
   }).join('');
 
   const xLab2 = FLOG.filter((_, i) => i % 3 === 0).map((r) => {
