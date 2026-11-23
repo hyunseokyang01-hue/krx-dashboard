@@ -283,6 +283,9 @@ const FLOG_BY_CODE = {
   "043260":[{"d":"20261012","hold":1784715,"total":70922823,"pct":2.37,"net":-4246495625,"price":31000,"chg":-4.76},{"d":"20261013","hold":1655096,"total":70922823,"pct":2.19,"net":-1059304300,"price":30900,"chg":-0.32},{"d":"20261014","hold":1644663,"total":70922823,"pct":2.18,"net":-1674954275,"price":30050,"chg":-2.75},{"d":"20261015","hold":1495685,"total":70922823,"pct":1.98,"net":7873146075,"price":25300,"chg":-15.81},{"d":"20261016","hold":1813599,"total":70922823,"pct":2.4,"net":-6574439750,"price":27400,"chg":8.3},{"d":"20261019","hold":1570561,"total":70922823,"pct":2.08,"net":2230330375,"price":28250,"chg":3.1},{"d":"20261020","hold":1583164,"total":70922823,"pct":2.1,"net":-5358446225,"price":26100,"chg":-7.61},{"d":"20261021","hold":1396658,"total":70922823,"pct":1.85,"net":-1137191875,"price":29250,"chg":12.07},{"d":"20261022","hold":1447858,"total":70922823,"pct":1.92,"net":-9205064475,"price":26800,"chg":-8.38},{"d":"20261023","hold":1132859,"total":70922823,"pct":1.5,"net":936863350,"price":26350,"chg":-1.68},{"d":"20261026","hold":1263730,"total":70922823,"pct":1.67,"net":-1359748225,"price":26700,"chg":1.33},{"d":"20261027","hold":1213457,"total":70922823,"pct":1.61,"net":2081345075,"price":27900,"chg":4.49},{"d":"20261028","hold":1305594,"total":70922823,"pct":1.73,"net":882308350,"price":29200,"chg":4.66},{"d":"20261029","hold":1337516,"total":70922823,"pct":1.77,"net":-2453377850,"price":28850,"chg":-1.2},{"d":"20261030","hold":1250933,"total":70922823,"pct":1.66,"net":-1045692225,"price":26100,"chg":-9.53},{"d":"20261102","hold":1214321,"total":70922823,"pct":1.61,"net":-899087500,"price":27200,"chg":4.21},{"d":"20261103","hold":1213473,"total":70922823,"pct":1.61,"net":-27439950,"price":24800,"chg":-8.82},{"d":"20261104","hold":1222070,"total":70922823,"pct":1.62,"net":1559791200,"price":24600,"chg":-0.81},{"d":"20261105","hold":1410088,"total":70922823,"pct":1.87,"net":1123787350,"price":20150,"chg":-18.09},{"d":"20261106","hold":1468499,"total":70922823,"pct":1.95,"net":2492906555,"price":19300,"chg":-4.22},{"d":"20261109","hold":1609130,"total":70922823,"pct":2.13,"net":280028370,"price":18540,"chg":-3.94},{"d":"20261110","hold":1663440,"total":70922823,"pct":2.2,"net":-1735875660,"price":20150,"chg":8.68},{"d":"20261111","hold":1590393,"total":70922823,"pct":2.11,"net":2608142175,"price":23650,"chg":17.37},{"d":"20261112","hold":1711029,"total":70922823,"pct":2.27,"net":-1031470525,"price":23700,"chg":0.21},{"d":"20261113","hold":1672248,"total":70922823,"pct":2.22,"net":395285550,"price":23850,"chg":0.63},{"d":"20261116","hold":1701904,"total":70922823,"pct":2.26,"net":653423350,"price":21400,"chg":-10.27},{"d":"20261117","hold":1770993,"total":70922823,"pct":2.35,"net":1906682650,"price":23800,"chg":11.21},{"d":"20261118","hold":1799795,"total":70922823,"pct":2.39,"net":6165495625,"price":26750,"chg":12.39},{"d":"20261119","hold":2058490,"total":70922823,"pct":2.73,"net":-5516392925,"price":26100,"chg":-2.43},{"d":"20261120","hold":1846048,"total":70922823,"pct":2.45,"net":-2080176150,"price":23800,"chg":-8.81}]
 };
 
+// MEMO_BY_CODE: 종목별 분석 메모 (update_html이 KRX/_memo/memo_by_code.json에서 주입)
+const MEMO_BY_CODE = {};
+
 // SLOG_BY_CODE: 종목별 공매도 데이터
 // 필드: {d, vol, amt, bal}
 // ※ 데이터 없음 — KRX 공매도 CSV 수집 후 추가 필요
@@ -452,6 +455,8 @@ function buildStockPanel(stock, tabIdx) {
 
     <div class="kpi-row" id="s${c}_kpiMain"></div>
     <div class="kpi-row" style="margin-top:10px" id="s${c}_kpiRank"></div>
+
+    <div id="s${c}_memo" style="margin-top:10px"></div>
 
     <div class="sec" id="s${c}_todaySec">▌ 금일 현황 (로딩중)</div>
     <div id="s${c}_today"></div>
@@ -990,6 +995,7 @@ function drawStockTab(stock){
   }
 
   // ── 섹션 A/B/C/D 호출 ───────────────────────────────────────────
+  drawMemoSection(stock);
   drawForeignSection(stock);
   drawShortSection(stock);
   drawEventSection(stock);
@@ -1257,6 +1263,17 @@ function fmtKRW(v){
   return s + a.toLocaleString() + '원';
 }
 
+// 분석 메모 — MEMO_BY_CODE[code] = {updated, title, items:[...]} (KRX/_memo/memo_by_code.json에서 주입)
+function drawMemoSection(stock){
+  const el = document.getElementById('s' + stock.code + '_memo');
+  if(!el) return;
+  const m = (typeof MEMO_BY_CODE !== 'undefined') ? MEMO_BY_CODE[stock.code] : null;
+  if(!m || !m.items || !m.items.length){ el.innerHTML = ''; return; }
+  const me = s => String(s).replace(/[&<>]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));
+  el.innerHTML = '<div class="sec" style="color:#FFD54F;border-left:3px solid #FFD54F;padding-left:.6rem">▌ 분석 메모' + (m.updated ? ' (' + me(m.updated) + ')' : '') + '</div>'
+    + (m.title ? '<div class="pnote">' + me(m.title) + '</div>' : '')
+    + '<ul style="margin:6px 0 0 1.1rem;font-size:13px;line-height:1.65;color:#CFD8DC">' + m.items.map(x => '<li>' + me(x) + '</li>').join('') + '</ul>';
+}
 function drawForeignSection(stock){
   const c = stock.code;
   const el = document.getElementById('s' + c + '_foreign');
